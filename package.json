@@ -1,0 +1,27 @@
+{
+  "name": "sanarflix-mundiapi",
+  "version": "1.0.0",
+  "description": "api de pagamento do sanarflix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weydsonufba/sanarflix-mundiapi.git"
+  },
+  "keywords": [
+    "sanarflix",
+    "mundiapi"
+  ],
+  "author": "Weydson Macedo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weydsonufba/sanarflix-mundiapi/issues"
+  },
+  "homepage": "https://github.com/weydsonufba/sanarflix-mundiapi#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
