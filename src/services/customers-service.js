@@ -1,18 +1,15 @@
  module.exports = {
-     createCustomer(req) {
-         // var fs = require('fs');
-         const request = require("request");
-         // var body = JSON.parse(fs.readFileSync('body.json', 'utf8'));
-         var options;
+     createCustomer(body) {
 
-         options = {
+         const request = require("request");
+         var options = {
              method: 'POST',
              uri: 'https://api.mundipagg.com/core/v1/customers',
              headers: {
                  'Authorization': 'Basic ' + new Buffer("sk_test_RYwm6wBcMjt387nb:").toString('base64'),
                  'Content-Type': 'application/json'
              },
-             json: req.body
+             json: body
          };
          return new Promise((resolve, reject) => {
              return request(options, function(error, response, body) {
@@ -20,11 +17,11 @@
              });
          });
      },
-     getAccessToken(id) {
+     createAccessToken(id) {
 
          const request = require("request");
          var options = {
-             method: 'GET',
+             method: 'POST',
              uri: 'https://api.mundipagg.com/core/v1/customers/' + id + '/access-tokens',
              headers: {
                  'Authorization': 'Basic ' + new Buffer("sk_test_RYwm6wBcMjt387nb:").toString('base64'),
@@ -34,8 +31,11 @@
          };
          return new Promise((resolve, reject) => {
              return request(options, function(error, response, body) {
-                 console.log(response.body.data)
-                 return resolve(response.body.data[0].code);
+                 if (!response.body.code) {
+
+                     return resolve(response.body.data[0].code);
+                 }
+                 return resolve(response.body.code);
              });
          });
      },
@@ -43,7 +43,7 @@
      getCustomer(req) {
          if (req.query.id) {
              const request = require("request");
-             return this.getAccessToken(req.query.id).then((access_token) => {
+             return this.createAccessToken(req.query.id).then((access_token) => {
 
                  var options = {
                      method: 'GET',
@@ -52,7 +52,7 @@
                          'Authorization': 'Bearer ' + access_token,
                          'Content-Type': 'application/json'
                      },
-                     //json: req.body
+
                  };
                  return new Promise((resolve, reject) => {
                      return request(options, function(error, response, body) {
